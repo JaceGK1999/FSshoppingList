@@ -5,7 +5,7 @@ export function renderShoppingList(list) {
     div.classList.add(list.complete ? 'complete' : 'incomplete');
     div.classList.add('list');
 
-    p.textContent = list.list;
+    p.textContent = list;
 
     div.append(p);
 

@@ -6,11 +6,11 @@ import { renderShoppingList } from '../render-utils.js';
 const test = QUnit.test;
 
 test('render shopping list', (expect) => {
-    const expected = '';
+    const expected = '<div class="incomplete list"><p>hello</p></div>';
 
     const actual = renderShoppingList('hello');
 
-    expect.outerHtml(actual, expected);
+    expect.deepEqual(actual.outerHTML, expected);
 });
 
 test('time to test a function', (expect) => {
