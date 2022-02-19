@@ -1,44 +1,40 @@
 const SUPABASE_URL = 'https://uhmsxsfarryniihsuyry.supabase.co';
-const SUPABASE_KEY = 'yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVobXN4c2ZhcnJ5bmlpaHN1eXJ5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY0NDg1ODk5NSwiZXhwIjoxOTYwNDM0OTk1fQ.6nj7bcX8HwQyFQNgiIoCcY6u37Gv4ctD0Ivcfo9zsKQ'';
-
+const SUPABASE_KEY =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVobXN4c2ZhcnJ5bmlpaHN1eXJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDQ4NTg5OTUsImV4cCI6MTk2MDQzNDk5NX0.DX8Yp3q-uUt4Q185uQlz61drW20MespMboRangENHIg';
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-export async function createTodo(todo) {
+export async function createShoppings(shop) {
     const response = await client
         .from('shoppings')
         .insert({
-            todo: todo,
+            shop: shop,
             complete: false,
             user_id: client.auth.user().id,
         })
         .single();
 
-
     return checkError(response);
 }
 
-export async function deleteAllTodos() {
+export async function deleteAllShoppings() {
     await client.from('shoppings').delete().match({ user_id: client.auth.user().id });
-
 }
 
-export async function getTodos() {
+export async function getShoppings() {
     const response = await client
         .from('shoppings')
         .select()
         .order('complete')
         .match({ user_id: client.auth.user().id });
-
-
+    console.log(response, 'supabase response');
     return checkError(response);
 }
 
-export async function completeTodo(id) {
+export async function completeShoppings(id) {
     const response = await client.from('shoppings').update({ complete: true }).match({
         user_id: client.auth.user().id,
         id: id,
     });
-
 
     return checkError(response);
 }
@@ -67,7 +63,7 @@ export async function signupUser(email, password) {
 
 export async function signInUser(email, password) {
     const response = await client.auth.signIn({ email, password });
-
+    console.log(response, 'test 1');
     return response.user;
 }
 
